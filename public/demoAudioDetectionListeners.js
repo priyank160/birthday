@@ -46,6 +46,7 @@ document.addEventListener('signal', event => {
   if (dBV >= -17){
     console.log('Happy Birth Day')
     showCake()
+    sessionStorage.setItem('candleBlown', 'true');
   }
   if (debuglog)
     console.log(`signal  ${timestamp} ${items} ${volume} ${dBV} ${line}`)
