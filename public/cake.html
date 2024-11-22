@@ -455,5 +455,12 @@
     <script src="demoAudioRecorder.js"></script>
     <script src="demoAudioDetectionListeners.js"></script>
     <script src="demo.js"></script>
+    <script>
+      window.addEventListener('message', (event) => {
+        if (event.data === 'showCake') {
+          document.querySelector('#cake-holder').classList.add('done');
+        }
+      });
+    </script>
   </body>
 </html>

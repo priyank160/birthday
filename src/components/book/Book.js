@@ -3,10 +3,12 @@ import HTMLFlipBook from "react-pageflip";
 import "./book.css";
 import { HiOutlineCursorClick } from "react-icons/hi";
 import { FaMicrophone } from "react-icons/fa";
+import ConfettiContainer from "./ConfettiContainer";
 
 const Book = ({ name, message }) => {
   const bookRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+
 
   const [isMicAccessGranted, setMicAccessGranted] = useState(false);
   const [error, setError] = useState("");
@@ -57,8 +59,24 @@ const Book = ({ name, message }) => {
     setCurrentPage(e.data);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (sessionStorage.getItem('candleBlown')) {
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+      sessionStorage.removeItem('candleBlown');
+    };
+  }, []);
+
+
+
   return (
     <div className="flipbook-container">
+      <ConfettiContainer />
       <HTMLFlipBook
         ref={bookRef}
         width={isMobile ? 300 : 600}
@@ -76,7 +94,8 @@ const Book = ({ name, message }) => {
         onFlip={handleFlip}
       >
         <div className="page">
-          <div className="py-2 px-10 mt-14  lg:mt-0 flex flex-col lg:justify-center  text-center items-center min-h-full">
+
+          <div className=" py-2 px-10 mt-14  lg:mt-0 flex flex-col lg:justify-center  text-center items-center min-h-full">
             <h2 className="text-center lg:text-[43px] text-[32px] font-bold leading-[50px] capitalize">
               Happy birthday
             </h2>
@@ -89,7 +108,7 @@ const Book = ({ name, message }) => {
           </div>
         </div>
         <div className="page">
-          <p className="flex justify-center m-auto items-center text-center min-h-full font-semibold text-2xl">
+          <p className="birthday-greeting-page hidden justify-center m-auto items-center text-center min-h-full font-semibold text-2xl">
             {message}
           </p>
         </div>
